@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = "file:./dev.db"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  role      String
+  experience Int
+  skills    String[]
+  location  String
+  tokens    Int      @default(3)  // New users get 3 free tokens
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model SalaryEntry {
+  id        String   @id @default(uuid())
+  role      String
+  salary    Float
+  company   String
+  location  String
+  experience Int
+  remote    Boolean
+  skills    String[]
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Company {
+  id        String   @id @default(uuid())
+  name      String   @unique
+  avgSalary Float
+  employees Int
+  growth    Float
+  location  String
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
